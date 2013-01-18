@@ -64,6 +64,20 @@ Autoloader::map(array(
 
 /*
 |--------------------------------------------------------------------------
+| Auto-Loader Namespaces
+|--------------------------------------------------------------------------
+|
+| The Laravel auto-loader can search directories for files using the PSR-0
+| naming convention. This convention basically organizes classes by using
+| the class namespace to indicate the directory structure.
+|
+*/
+
+Autoloader::namespaces(array(
+	'Empire' => path('app').'models',
+));
+/*
+|--------------------------------------------------------------------------
 | Auto-Loader Directories
 |--------------------------------------------------------------------------
 |
@@ -74,7 +88,6 @@ Autoloader::map(array(
 */
 
 Autoloader::directories(array(
-	path('app').'models',
 	path('app').'libraries',
 ));
 
@@ -154,6 +167,27 @@ Blade::sharpen();
 */
 
 date_default_timezone_set(Config::get('application.timezone'));
+
+//Load Assets
+Asset::add('jquery', 'js/jquery-1.8.3.min.js');
+Asset::add('bootstrap', 'js/bootstrap.min.js');
+Asset::add('bootstrap-css', 'css/bootstrap.min.css');
+
+/*
+|--------------------------------------------------------------------------
+| Create Singletons
+|--------------------------------------------------------------------------
+|
+| Boop
+|
+*/
+
+IoC::singleton('type_repository', function() {
+	return new Empire\Repositories\Type_Repository();
+});
+IoC::singleton('user_repository', function() {
+	return new Empire\Repositories\User_Repository();
+});
 
 /*
 |--------------------------------------------------------------------------

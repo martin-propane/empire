@@ -79,7 +79,7 @@ return array(
 	|
 	*/
 
-	'cookie' => 'laravel_session',
+	'cookie' => 'empire_ancients_session',
 
 	/*
 	|--------------------------------------------------------------------------

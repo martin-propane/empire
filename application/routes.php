@@ -37,6 +37,12 @@ Route::get('/', function()
 	return View::make('home.index');
 });
 
+Route::controller('admin.types');
+Route::controller('login');
+Route::controller('logout');
+Route::controller('admin.users');
+
+Route::filter('pattern: admin/*', 'manager');
 /*
 |--------------------------------------------------------------------------
 | Application 404 & 500 Error Handlers
@@ -109,3 +115,27 @@ Route::filter('auth', function()
 {
 	if (Auth::guest()) return Redirect::to('login');
 });
+
+Route::filter('manager', function()
+{
+	if (Auth::guest()) return Redirect::to('login');
+	else if (Auth::user()->admin == 0) return Redirect::to('search/carwashes');
+});
+
+Route::filter('admin', function()
+{
+	if (Auth::guest()) return Redirect::to('login');
+	else if (Auth::user()->admin === 0) return Redirect::to('search/carwashes');
+	else if (Auth::user()->admin < 2) return Redirect::to('admin/panel');
+});
+
+View::composer('layouts.admin', function($view)
+{
+	$user = Auth::user();
+	if ($user->admin >= 1)
+		$view->nest('manager_menu', 'partials.manager_menu');
+	if ($user->admin >= 2)
+		$view->nest('admin_menu', 'partials.admin_menu');
+    $view->nest('user', 'partials.userbar', array('user' => Auth::user()->email));
+});
+
