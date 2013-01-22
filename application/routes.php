@@ -34,10 +34,11 @@
 
 Route::get('/', function()
 {
-	return View::make('home.index');
+	return Redirect::to_action('login');
 });
 
 Route::controller('admin.types');
+Route::controller('admin.rings');
 Route::controller('login');
 Route::controller('logout');
 Route::controller('admin.users');

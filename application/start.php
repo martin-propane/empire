@@ -172,6 +172,7 @@ date_default_timezone_set(Config::get('application.timezone'));
 Asset::add('jquery', 'js/jquery-1.8.3.min.js');
 Asset::add('bootstrap', 'js/bootstrap.min.js');
 Asset::add('bootstrap-css', 'css/bootstrap.min.css');
+Asset::add('admin-css', 'css/admin.css');
 
 /*
 |--------------------------------------------------------------------------
@@ -184,6 +185,9 @@ Asset::add('bootstrap-css', 'css/bootstrap.min.css');
 
 IoC::singleton('type_repository', function() {
 	return new Empire\Repositories\Type_Repository();
+});
+IoC::singleton('ring_repository', function() {
+	return new Empire\Repositories\Ring_Repository();
 });
 IoC::singleton('user_repository', function() {
 	return new Empire\Repositories\User_Repository();

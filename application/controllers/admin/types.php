@@ -61,5 +61,14 @@ class Admin_Types_Controller extends Base_Controller
 
 		return Redirect::to_action('admin.types@view');
 	}
+
+	public function get_delete($id)
+	{
+		$entity = $this->repo->get($id);
+
+		$this->repo->remove($entity);
+
+		return Redirect::to_action('admin.types@view');
+	}
 }
 

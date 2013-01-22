@@ -10,11 +10,15 @@ class Type_Repository
 {
 	public $table = 'Types';
 
-	public function add($entity)
+	public function add(&$entity)
 	{
 		Type_Validator::validate($entity);
 
-		Database::table($this->table)->insert(get_object_vars($entity));
+		$id = Database::table($this->table)->insert_get_id(get_object_vars($entity));
+
+		$entity->id = $id;
+
+		return $id;
 	}
 
 	public function save($entity)

@@ -6,7 +6,7 @@ class Type extends Base
 
 	public function __construct($values)
 	{
-		$this->setProperties($this->properties, $values);
+		parent::__construct($this->properties, $values);
 	}
 }
 

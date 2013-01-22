@@ -3,7 +3,8 @@
 abstract class Base
 {
 	protected $_properties;
-	protected function setProperties($properties, $values)
+
+	public function __construct($properties, $values)
 	{
 		$this->_properties = $properties;
 

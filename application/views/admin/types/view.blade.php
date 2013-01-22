@@ -25,7 +25,7 @@ function deleteItem(id, name)
 {
 	var conf = confirm('Do you really want to delete "' + name + '?"');
 	if (conf)
-		window.location = '{{ URL::to_action('admin.entitys@delete') }}/' + id;
+		window.location = '{{ URL::to_action('admin.types@delete') }}/' + id;
 }
 </script>
 

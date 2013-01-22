@@ -1,20 +1,13 @@
-<?php namespace Models\Entities;
+<?php namespace Empire\Entities;
 
-class Ring 
+class Ring extends Base
 {
-	public $id;
-	public $name;
-	public $type_id;
-	public $description;
-	public $price;
+	protected $properties = array('id', 'name', 'type_id', 'description', 'price', 'quantity', 'display_picture');
 
-	public function __construct($id, $name, $type_id, $description, $price)
+	public function __construct($values)
 	{
-		$this->id = $id;
-		$this->name = $name;
-		$this->type_id = $type_id;
-		$this->description = $description;
-		$this->price = $price;
+		parent::__construct($this->properties, $values);
 	}
 }
+
 
