@@ -17,7 +17,7 @@ class Login_Controller extends Base_Controller
 	public function post_index()
 	{
 		if (Auth::check())
-			return Redirect::to_action('admin.panel@index');
+			return Redirect::to_action('admin.types@index');
 
 		$email = Input::get('email');
 		$password = Input::get('password');
@@ -25,7 +25,7 @@ class Login_Controller extends Base_Controller
 		$auth = Auth::attempt(array('username' => $email, 'password' => $password));
 
 		if ($auth)
-			return Redirect::to_action('admin.panel@index');
+			return Redirect::to_action('admin.types@index');
 		else
 			return Response::make('You were not logged in.');
 	}
