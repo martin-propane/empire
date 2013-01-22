@@ -4,7 +4,7 @@
 		<tr>
 			<td>ID</td>
 			<td>Email</td>
-			<td>Admin Level</td>
+			{{-- <td>Admin Level</td> --}}
 			<td>Edit</td>
 			<td>Delete</td>
 		</tr>
@@ -14,6 +14,7 @@
 		<tr>
 			<td><?php echo $user->id ?></td>
 			<td><?php echo $user->email ?></td>
+			{{--
 			<td><?php 
 				switch ($user->admin)
 				{
@@ -28,6 +29,7 @@
 						break;
 				}
 			?></td>
+			--}}
 			<td><?php echo HTML::link_to_action('admin.users@edit', 'Edit', array($user->id), array('class'=>'btn')) ?></td>
 			<td><a href="javascript:void(0)" onClick="deleteItem({{ $user->id }}, '{{ $user->email }}')" class = "btn">Delete</a></td>
 		</tr>

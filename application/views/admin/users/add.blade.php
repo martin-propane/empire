@@ -20,11 +20,14 @@ $admin_levels = array(
 	2 => 'Admin'
 );
 
+/*
 echo '<div class = "control-group" id = "admin">';
 echo Form::label('admin', 'Admin', array('class' => 'control-label'));
 echo '<div class = "controls">';
-echo Form::select('admin', $admin_levels);
+echo Form::select('admin', $admin_levels, $admin);
 echo '</div></div>';
+*/
+echo Form::hidden('admin', 2);
 
 echo '<div class = "control-group">';
 echo '<div class = "controls">';
