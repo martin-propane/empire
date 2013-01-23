@@ -50,6 +50,13 @@ class Ring_Query
 		return $this;
 	}
 
+	public function sort_type_id($order = 'asc')
+	{
+		$this->query = $this->query->order_by('type_id', $order);
+
+		return $this;
+	}
+
 	public function sort_price($order = 'asc')
 	{
 		$this->query = $this->query->order_by('price', $order);
