@@ -1,6 +1,6 @@
 <?php
 echo Form::open('admin/types/add', 'POST', array('id' => 'addForm', 'class' => 'form-horizontal'));
-echo '<legend>Edit Type</legend>';
+echo '<legend>Add Type</legend>';
 
 echo '<div class = "control-group">';
 echo Form::label('short_description', 'Short Description', array('class' => 'control-label'));
