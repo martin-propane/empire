@@ -173,6 +173,8 @@ Asset::add('jquery', 'js/jquery-1.8.3.min.js');
 Asset::add('bootstrap', 'js/bootstrap.min.js');
 Asset::add('bootstrap-css', 'css/bootstrap.min.css');
 Asset::add('admin-css', 'css/admin.css');
+Asset::add('lightbox-css', 'css/lightbox.css');
+Asset::add('lightbox', 'js/lightbox.js');
 
 /*
 |--------------------------------------------------------------------------

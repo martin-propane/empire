@@ -56,7 +56,7 @@ foreach ($types as $id=>$type)
 			<td><?php echo $e->name ?></td>
 			<td>
 			@if ($e->display_picture !== null)
-				<img src="{{ URL::to_asset($e->display_picture); }}" class="ring_img">
+				<a href="{{ URL::to_asset($e->display_picture); }}" rel="lightbox"><img src="{{ URL::to_asset($e->display_picture); }}" class="ring_img"></a>
 			@else
 				<img class="ring_img">
 			@endif
