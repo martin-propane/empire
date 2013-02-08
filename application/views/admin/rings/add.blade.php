@@ -1,14 +1,15 @@
 <?php
 $type_list = array();
 foreach ($types as $id=>$type)
-	$type_list[$type->id] = $type->short_description;
+	$type_list[$type->id] = '('.($id+1).') '.$type->short_description;
+	($id+1).') '.$type->short_description;
 
 echo Form::open_for_files('admin/rings/add', 'POST', array('id' => 'addForm', 'class' => 'form-horizontal'));
 
 echo '<legend>Add Ring</legend>';
 
 echo '<div class = "control-group">';
-echo Form::label('name', 'Name', array('class' => 'control-label'));
+echo Form::label('name', 'Catalog Number', array('class' => 'control-label'));
 echo '<div class = "controls">';
 echo Form::text('name', null, array('class' => 'required'));
 echo '</div></div>';
@@ -27,13 +28,32 @@ echo Form::select('type_id', $type_list);
 echo '</div></div>';
 
 echo '<div class = "control-group">';
-echo Form::label('description', 'Description', array('class' => 'control-label'));
+echo Form::label('date', 'Date', array('class' => 'control-label'));
+echo '<div class = "controls">';
+echo Form::text('date', null, array('class' => 'required'));
+echo '</div></div>';
+
+echo '<div class = "control-group">';
+echo Form::label('origin', 'Origin', array('class' => 'control-label'));
+echo '<div class = "controls">';
+echo Form::text('origin', null, array('class' => 'required'));
+echo '</div></div>';
+
+echo '<div class = "control-group">';
+echo Form::label('description', 'Attribution', array('class' => 'control-label'));
 echo '<div class = "controls">';
 echo Form::textarea('description', null, array('class' => 'required'));
 echo '</div></div>';
 
 echo '<div class = "control-group">';
-echo Form::label('price', 'Price', array('class' => 'control-label'));
+echo Form::label('source', 'Source', array('class' => 'control-label'));
+echo '<div class = "controls">';
+echo Form::text('source', null, array('class' => 'required'));
+echo '</div></div>';
+
+
+echo '<div class = "control-group">';
+echo Form::label('price', 'Value', array('class' => 'control-label'));
 echo '<div class = "controls">';
 echo Form::text('price', null, array('class' => 'required'));
 echo '</div></div>';

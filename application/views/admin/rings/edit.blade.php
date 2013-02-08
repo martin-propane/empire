@@ -1,14 +1,14 @@
 <?php
 $type_list = array();
 foreach ($types as $type)
-	$type_list[$type->id] = $type->short_description;
+	$type_list[$type->id] = '('.($id+1).') '.$type->short_description;
 
 echo Form::open_for_files('admin/rings/edit/' . $id, 'POST', array('id' => 'addForm', 'class' => 'form-horizontal'));
 
 echo '<legend>Edit Ring</legend>';
 
 echo '<div class = "control-group">';
-echo Form::label('name', 'Name', array('class' => 'control-label'));
+echo Form::label('name', 'Catalog Number', array('class' => 'control-label'));
 echo '<div class = "controls">';
 echo Form::text('name', $name, array('class' => 'required'));
 echo '</div></div>';
@@ -31,13 +31,31 @@ echo Form::select('type_id', $type_list, $type_id);
 echo '</div></div>';
 
 echo '<div class = "control-group">';
-echo Form::label('description', 'Description', array('class' => 'control-label'));
+echo Form::label('date', 'Date', array('class' => 'control-label'));
+echo '<div class = "controls">';
+echo Form::text('date', $date, array('class' => 'required'));
+echo '</div></div>';
+
+echo '<div class = "control-group">';
+echo Form::label('origin', 'Origin', array('class' => 'control-label'));
+echo '<div class = "controls">';
+echo Form::text('origin', $origin, array('class' => 'required'));
+echo '</div></div>';
+
+echo '<div class = "control-group">';
+echo Form::label('description', 'Attribution', array('class' => 'control-label'));
 echo '<div class = "controls">';
 echo Form::textarea('description', $description, array('class' => 'required'));
 echo '</div></div>';
 
 echo '<div class = "control-group">';
-echo Form::label('price', 'Price', array('class' => 'control-label'));
+echo Form::label('source', 'Source', array('class' => 'control-label'));
+echo '<div class = "controls">';
+echo Form::text('source', $source, array('class' => 'required'));
+echo '</div></div>';
+
+echo '<div class = "control-group">';
+echo Form::label('price', 'Value', array('class' => 'control-label'));
 echo '<div class = "controls">';
 echo Form::text('price', $price, array('class' => 'required'));
 echo '</div></div>';

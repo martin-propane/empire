@@ -4,19 +4,19 @@ $attr_list = array(
 	'name'=>'Name',
 	'display_picture'=>'Picture',
 	'type_id'=>'Type',
-	'price'=>'Price',
+	'price'=>'Value',
 	'quantity'=>'Quantity',
 );
 
 $type_list = array();
 $type_list['all'] = 'All';
 foreach ($types as $id=>$type)
-	$type_list[$type->id] = $type->short_description;
+	$type_list[$type->id] = '('.($id+1).') '.$type->short_description;
 ?>
 <legend>Rings</legend>
 	{{ Form::open(URI::current(), 'GET', array('class'=>'form-inline', 'id'=>'view_form')) }}
 		{{ Form::select('type_id', $type_list, $params['type_id']) }}
-		{{ Form::text('name', $params['name'], array('class'=>'input-small', 'placeholder'=>'Name')) }}
+		{{ Form::text('Catalog Number', $params['name'], array('class'=>'input-small', 'placeholder'=>'Name')) }}
 		{{ Form::hidden('page', $params['page'], array('id'=>'page')) }}
 		{{ Form::hidden('sort', $params['sort'], array('id'=>'sort')) }}
 		{{ Form::hidden('order', $params['order'], array('id'=>'order')) }}
