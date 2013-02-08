@@ -13,8 +13,7 @@ var type_descriptions = new Array(
 <?php
 $type_list = array();
 foreach ($types as $id=>$type)
-	$type_list[$type->id] = '('.($id+1).') '.$type->short_description;
-	($id+1).') '.$type->short_description;
+	$type_list[$type->id] = '('.($type->id).') '.$type->short_description;
 
 echo Form::open_for_files('admin/rings/add', 'POST', array('id' => 'addForm', 'class' => 'form-horizontal'));
 

@@ -1,7 +1,19 @@
+<script type="text/javascript">
+var type_descriptions = new Array(
+@foreach ($types as $id=>$type)
+@if ($id < count($types) - 1)
+"{{str_replace('"', '\\"', $type->description)}}", 
+@else
+"{{str_replace('"', '\\"', $type->description)}}"
+@endif
+@endforeach
+);
+</script>
+
 <?php
 $type_list = array();
 foreach ($types as $type)
-	$type_list[$type->id] = '('.($id+1).') '.$type->short_description;
+	$type_list[$type->id] = '('.($type->id).') '.$type->short_description;
 
 echo Form::open_for_files('admin/rings/edit/' . $id, 'POST', array('id' => 'addForm', 'class' => 'form-horizontal'));
 
@@ -28,6 +40,12 @@ echo '<div class = "control-group">';
 echo Form::label('type_id', 'Type', array('class' => 'control-label'));
 echo '<div class = "controls">';
 echo Form::select('type_id', $type_list, $type_id);
+echo '</div></div>';
+
+echo '<div class = "control-group">';
+echo Form::label('', 'Type Description', array('class' => 'control-label'));
+echo '<div class = "controls">';
+echo Form::textarea('', $types[$type_id]->description, array('disabled', 'id'=>'type_desc'));
 echo '</div></div>';
 
 echo '<div class = "control-group">';
@@ -95,6 +113,11 @@ function setImage(input)
 
 $(document).ready(function()
 {
+	$('#type_id').change(function()
+	{
+		$('#type_desc').val(type_descriptions[$('#type_id').val() - 1]);
+	});
+
 	$('#addForm').validate({
 		onkeyup: false,
 		errorPlacement: function(error, element) {

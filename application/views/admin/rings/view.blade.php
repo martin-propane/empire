@@ -11,7 +11,7 @@ $attr_list = array(
 $type_list = array();
 $type_list['all'] = 'All';
 foreach ($types as $id=>$type)
-	$type_list[$type->id] = '('.($id+1).') '.$type->short_description;
+	$type_list[$type->id] = '('.($type->id).') '.$type->short_description;
 ?>
 <legend>Rings</legend>
 	{{ Form::open(URI::current(), 'GET', array('class'=>'form-inline', 'id'=>'view_form')) }}
