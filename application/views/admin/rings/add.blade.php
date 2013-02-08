@@ -1,3 +1,15 @@
+<script type="text/javascript">
+var type_descriptions = new Array(
+@foreach ($types as $id=>$type)
+@if ($id < count($types) - 1)
+"{{str_replace('"', '\\"', $type->description)}}", 
+@else
+"{{str_replace('"', '\\"', $type->description)}}"
+@endif
+@endforeach
+);
+</script>
+
 <?php
 $type_list = array();
 foreach ($types as $id=>$type)
@@ -28,6 +40,12 @@ echo Form::select('type_id', $type_list);
 echo '</div></div>';
 
 echo '<div class = "control-group">';
+echo Form::label('', 'Type Description', array('class' => 'control-label'));
+echo '<div class = "controls">';
+echo Form::textarea('', reset($types)->description, array('disabled', 'id'=>'type_desc'));
+echo '</div></div>';
+
+echo '<div class = "control-group">';
 echo Form::label('date', 'Date', array('class' => 'control-label'));
 echo '<div class = "controls">';
 echo Form::text('date', null, array('class' => 'required'));
@@ -36,7 +54,7 @@ echo '</div></div>';
 echo '<div class = "control-group">';
 echo Form::label('origin', 'Origin', array('class' => 'control-label'));
 echo '<div class = "controls">';
-echo Form::text('origin', null, array('class' => 'required'));
+echo Form::text('origin', 'Bulgaria', array('class' => 'required'));
 echo '</div></div>';
 
 echo '<div class = "control-group">';
@@ -90,8 +108,14 @@ function setImage(input)
 	}
 }
 
+
 $(document).ready(function()
 {
+	$('#type_id').change(function()
+	{
+		$('#type_desc').val(type_descriptions[$('#type_id').val() - 1]);
+	});
+
 	$('#addForm').validate({
 		onkeyup: false,
 		errorPlacement: function(error, element) {
