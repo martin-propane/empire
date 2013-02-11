@@ -28,6 +28,8 @@ echo '</div></div>';
 echo '<div class = "control-group">';
 echo Form::label('display_picture', 'Display Picture', array('class' => 'control-label'));
 echo '<div class = "controls">';
+echo Form::hidden('picture_count', 0);
+echo Form::hidden('picture_moves', null);
 echo Form::file('display_picture', array('onchange'=>'setImage(this)'));
 echo '<br><img id="display_preview" style="display: none;">';
 echo '</div></div>';
@@ -129,7 +131,15 @@ $(document).ready(function()
 			var con = $(element).parent().parent();
 			con.removeClass(errorClass);
 		},
-		errorElement: 'span'
+		errorElement: 'span',
+		submitHandler: function(form) {
+			form.submit();
+		},
+		rules: {
+			name: {
+				digits: true
+			}
+		}
 	});
 });
 </script>

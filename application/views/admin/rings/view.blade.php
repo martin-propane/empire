@@ -1,7 +1,7 @@
 <?php
 $attr_list = array(
 	'id'=>'ID',
-	'name'=>'Name',
+	'name'=>'Catalog Number',
 	'display_picture'=>'Picture',
 	'type_id'=>'Type',
 	'price'=>'Value',
@@ -16,7 +16,7 @@ foreach ($types as $id=>$type)
 <legend>Rings</legend>
 	{{ Form::open(URI::current(), 'GET', array('class'=>'form-inline', 'id'=>'view_form')) }}
 		{{ Form::select('type_id', $type_list, $params['type_id']) }}
-		{{ Form::text('Catalog Number', $params['name'], array('class'=>'input-small', 'placeholder'=>'Name')) }}
+		{{ Form::text('Catalog Number', $params['name'], array('class'=>'input-medium', 'placeholder'=>'Catalog Number')) }}
 		{{ Form::hidden('page', $params['page'], array('id'=>'page')) }}
 		{{ Form::hidden('sort', $params['sort'], array('id'=>'sort')) }}
 		{{ Form::hidden('order', $params['order'], array('id'=>'order')) }}

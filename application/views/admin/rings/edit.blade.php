@@ -132,7 +132,12 @@ $(document).ready(function()
 			var con = $(element).parent().parent();
 			con.removeClass(errorClass);
 		},
-		errorElement: 'span'
+		errorElement: 'span',
+		rules: {
+			name: {
+				digits: true
+			}
+		}
 	});
 });
 </script>
