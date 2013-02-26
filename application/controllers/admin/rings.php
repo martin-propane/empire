@@ -27,6 +27,7 @@ class Admin_Rings_Controller extends Base_Controller
 		$sort = Input::get('sort', 'id');
 		$order = Input::get('order', 'asc');
 		$page = Input::get('page', 1);
+		$pictures = Input::get('pictures');
 
 		$per_page = 10;
 
@@ -90,13 +91,11 @@ class Admin_Rings_Controller extends Base_Controller
 
 	public function post_add()
 	{
-		$pic = Input::file('display_picture');
+		$pictures = Input::get('pictures');
 
-		//To prevent the create method from thinking there is a pic when nothing is uploaded (shouldn't pic already be null?)
-		if ($pic !== null && $pic['tmp_name'] == null)
-			$pic = null;
+		$pics = Input::file('display_picture');
 
-		$ring = Ring_Helper::create(Input::get(), $pic); //helper method also saves
+		$ring = Ring_Helper::create(Input::get(), $pics, $pictures); //helper method also saves
 
 		return Redirect::to_action('admin.rings@view');
 	}
@@ -112,10 +111,13 @@ class Admin_Rings_Controller extends Base_Controller
 
 	public function post_edit($id)
 	{
-		$pic = Input::file('display_picture');
-		$change = Input::get('display_changed') == true;
+		$pictures = Input::get('pictures');
 
-		Ring_Helper::update($id, Input::get(), $pic, $change); //will want to change to detect if picture was changed later
+		$pics = Input::file('display_picture');
+
+		$change = true;
+
+		Ring_Helper::update($id, Input::get(), $pics, $pictures, $change); //will want to change to detect if picture was changed later
 
 		return Redirect::to_action('admin.rings@view');
 	}
@@ -129,5 +131,4 @@ class Admin_Rings_Controller extends Base_Controller
 		return Redirect::to_action('admin.rings@view');
 	}
 }
-
 

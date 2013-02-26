@@ -168,9 +168,12 @@ Blade::sharpen();
 
 date_default_timezone_set(Config::get('application.timezone'));
 
+//TODO: Clean up asset includes, manually include them in other files instead of including them all automatically
 //Load Assets
 Asset::add('jquery', 'js/jquery-1.8.3.min.js');
+Asset::add('jquery-ui', 'js/jquery-ui.js');
 Asset::add('bootstrap', 'js/bootstrap.min.js');
+Asset::add('jquery-ui-css', 'css/jquery-ui.css');
 Asset::add('bootstrap-css', 'css/bootstrap.min.css');
 Asset::add('admin-css', 'css/admin.css');
 Asset::add('lightbox-css', 'css/lightbox.css');

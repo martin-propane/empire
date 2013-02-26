@@ -1,8 +1,47 @@
 .ring_img {
-	height: 50px;
+	height:50px;
 }
 
 .header_col {
-	white-space: nowrap;
+	white-space:nowrap;
 }
 
+#pictures-container {
+	max-width:600px;
+	min-width:206px;
+	background-color:#DDDDDD;
+}
+
+#pictures-list {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	list-style-position:outside;
+}
+
+#pictures-list li {
+	padding: 0px;
+	margin: 0;
+	width:105px;
+	height:105px;
+	background-color: #999999;
+	display:inline-block;
+	float:left;
+	position:relative;
+}
+
+.picture-icon {
+	width:95px;
+	height:95px;
+	margin: 5px;
+}
+
+.picture-x {
+	position:absolute;
+	right:5px;
+	top:5px;
+	width:15px;
+	height:15px;
+	margin:0;
+	padding:0;
+}

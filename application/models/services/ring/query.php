@@ -2,13 +2,15 @@
 
 use \stdClass;
 use Laravel\Database;
-use Shinefind\Entities\Carwash;
+use Empire\Entities\Ring;
+use Empire\Entities\RingPicture;
 
 class Ring_Query
 {
 	protected $query;
 
 	public $TABLE = 'Rings';
+	public $PIC_TABLE = 'RingPictures';
 
 	public function __construct()
 	{
@@ -78,7 +80,7 @@ class Ring_Query
 
 	public function get()
 	{
-		return $this->query->get();
+		return $this->get_entities($this->query->get());
 	}
 
 	public function page($per_page, $page_num)
@@ -100,6 +102,20 @@ class Ring_Query
 
 	protected function get_entity($tuple)
 	{
+		$id = $tuple->id;
+		
+		$pictures = array();
+		$pic_tuples = Database::table($this->PIC_TABLE)->where('ring_id', '=', $id)->order_by('order', 'asc')->get();
+		foreach ($pic_tuples as $pic_tuple)
+			$pictures[] = $this->get_picture_entity($pic_tuple);
+
+		$tuple->pictures = $pictures;
+
 		return new Ring(get_object_vars($tuple));
+	}
+
+	protected function get_picture_entity($tuple)
+	{
+		return new RingPicture(get_object_vars($tuple));
 	}
 }

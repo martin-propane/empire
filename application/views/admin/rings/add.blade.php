@@ -26,12 +26,15 @@ echo Form::text('name', null, array('class' => 'required'));
 echo '</div></div>';
 
 echo '<div class = "control-group">';
-echo Form::label('display_picture', 'Display Picture', array('class' => 'control-label'));
+echo Form::label('display_picture', 'Pictures', array('class' => 'control-label'));
 echo '<div class = "controls">';
 echo Form::hidden('picture_count', 0);
 echo Form::hidden('picture_moves', null);
-echo Form::file('display_picture', array('onchange'=>'setImage(this)'));
-echo '<br><img id="display_preview" style="display: none;">';
+echo '<input type="file" name="display_picture[]" id="display_picture" multiple />'; //manually entered for specail "multiple" property
+echo '<div id="pictures-container">';
+echo '<ul id="pictures-list">';
+echo '</ul>';
+echo '</div>';
 echo '</div></div>';
 
 echo '<div class = "control-group">';
@@ -93,22 +96,53 @@ echo Form::close();
 ?>
 <?php echo HTML::script('js/jquery.validate.min.js'); ?>
 <script ring = "text/javascript">
-function setImage(input)
+
+var uploads = new Array();
+var upload_count = 0;
+
+function addImage(type, id, src)
 {
-	if (input.files && input.files[0])
-	{
-		var reader = new FileReader();
+	var pic_cell = $('<li></li>');
+	pic_cell.data('type', type);
+	pic_cell.data('id', id);
+	pic_cell.append('<img src="' + src + '" class="picture-icon">');
+	pic_cell.append('<div class="picture-x"><i class="icon-remove"></i> </div>');
 
-		reader.onload = function (e)
-		{
-			$('#display_preview').attr('src', e.target.result);
-			$('#display_preview').show();
-		}
+	$('#pictures-list').append(pic_cell);
 
-		reader.readAsDataURL(input.files[0]);
-	}
+	$('.picture-x').click(function() {
+		$(this).parent().remove();
+	});
+
+	return pic_cell[0];
 }
 
+$('#display_picture').change( function()
+{
+	var input = this;
+
+	if (input.files && input.files.length > 0)
+	{
+		for (var i = upload_count - 1; i >= 0; i--)
+		{
+			$(uploads[i]).remove();
+		}
+		for (var i = 0; i < input.files.length; i++)
+		{
+			(function(i) {
+				var reader = new FileReader();
+
+				reader.onload = function (e)
+				{
+					uploads[i] = addImage('uploaded', i, e.target.result);
+				}
+				reader.readAsDataURL(input.files[i]);
+			})(i);
+		}
+
+		upload_count = input.files.length;
+	}
+});
 
 $(document).ready(function()
 {
@@ -125,7 +159,6 @@ $(document).ready(function()
 		highlight: function(element, errorClass, validClass) {
 			var con = $(element).parent().parent();
 			con.addClass(errorClass);
-
 		},
 		unhighlight: function(element, errorClass, validClass) {
 			var con = $(element).parent().parent();
@@ -133,6 +166,12 @@ $(document).ready(function()
 		},
 		errorElement: 'span',
 		submitHandler: function(form) {
+
+			//build image order array
+			$('#pictures-list li').each(function(index, element) {
+				$('#addForm').append('<input type="hidden" name="pictures[]" value="' + $(element).data('type') + ' ' + $(element).data('id') + '">');
+			});
+
 			form.submit();
 		},
 		rules: {
@@ -141,8 +180,12 @@ $(document).ready(function()
 			}
 		}
 	});
+
+	$('#pictures-list').sortable();
+
+	$('.picture-x').click(function() {
+		$(this).parent().remove();
+	});
 });
 </script>
-
-
 

@@ -1,69 +1,115 @@
 <?php namespace Empire\Services;
 
 use Empire\Entities\Ring;
+use Empire\Entities\RingPicture;
 use Laravel\Validator;
 use Laravel\IoC;
 use Laravel\File;
 
 class Ring_Helper
 {
-	public static function create($values, $file_info = null)
+	public static function create($values, $new_pictures = null, $mapping = null)
 	{
 		$repo = IoC::resolve('ring_repository');
 
 		$entity = new Ring($values);
 		$id = $repo->add($entity);
 		$ring_dir = 'rings/'.$id.'/';
+		$pictures_dir = 'rings/pictures/';
 		if (!is_dir(path('public').$ring_dir))
 			mkdir(path('public').$ring_dir); //permissions should be investigated
+		if (!is_dir(path('public').$pictures_dir))
+			mkdir(path('public').$pictures_dir);
 
-		if ($file_info !== null && (File::is('png', $file_info['tmp_name']) || File::is('jpg', $file_info['tmp_name'])))
+		foreach ($mapping as $o=>$map)
 		{
-			$ext = File::extension($file_info['name']); //continue working on this
-			$tmp_path = $file_info['tmp_name'];
-			$display_path = $ring_dir . 'display.' . $ext;
+			$map_items = explode(' ', $map);
+			$upload_id = $map_items[1];
+			$ext = File::extension($new_pictures['name'][$upload_id]); //continue working on this
 
-			move_uploaded_file($tmp_path, path('public').$display_path);
+			//since this method is for creating first time, all pictures should be uploaded
 
-			$entity->display_picture = $display_path;
+			//first create a new picture
+			$picture = new RingPicture(array());
+			$pic_id = $repo->add_picture($picture);
 
-			$repo->save($entity);
+			$pic_url = $pictures_dir . $pic_id . '.' . $ext;
+			$picture->update(array('order'=>$o, 'url'=>$pic_url, 'ring_id'=>$id));
+
+			$tmp_path = $new_pictures['tmp_name'][$upload_id];
+			move_uploaded_file($tmp_path, path('public').$pic_url);
+
+			$repo->save_picture($picture);
 		}
 
 		return $entity;
 	}
 
-	public static function update($id, $values, $file_info = null, $change = false)
+	public static function update($id, $values, $new_pictures = null, $mapping = null, $change = false)
 	{
 		$repo = IoC::resolve('ring_repository');
 		
 		$ring_dir = 'rings/'.$id.'/';
+		$pictures_dir = 'rings/pictures/';
 		if (!is_dir(path('public').$ring_dir)) //technically should already be created, but just in case
 			mkdir(path('public').$ring_dir); //permissions should be investigated
 
 		$entity = $repo->get($id);
+		unset($values['pictures']);
 		$entity->update($values);
 
 		$ring_dir = 'rings/'.$id.'/';
 		if (!is_dir(path('public').$ring_dir))
 			mkdir(path('public').$ring_dir); //permissions should be investigated
+		if (!is_dir(path('public').$pictures_dir))
+			mkdir(path('public').$pictures_dir);
+
+		$repo->save($entity);
+
 		if ($change)
 		{
-			if ($file_info === null)
-				$entity->display_picture = null;
-			else
+			//TODO: Only remove pictures that are not in mapping (although it's only a small efficiency boost)
+			foreach ($entity->pictures as $picture)
 			{
-				$ext = File::extension($file_info['name']); //continue working on this
-				$tmp_path = $file_info['tmp_name'];
-				$display_path = $ring_dir . 'display.' . $ext;
+				$picture->update(array('ring_id'=>null, 'order'=>null));
+				$repo->save_picture($picture);
+			}
 
-				move_uploaded_file($tmp_path, path('public').$display_path);
+			if ($mapping !== null)
+			{
+				foreach ($mapping as $o=>$map)
+				{
+					$map_items = explode(' ', $map);
+					$type = $map_items[0];
+					if ($type === 'old')
+					{
+						$pic_id = $map_items[1];
+						$picture = $repo->get_picture($pic_id);
+						$picture->update(array('ring_id'=>$id, 'order'=>$o));
+					}
+					else
+					{
+						$upload_id = $map_items[1];
+						$ext = File::extension($new_pictures['name'][$upload_id]); //continue working on this
 
-				$entity->display_picture = $display_path;
+						//since this method is for creating first time, all pictures should be uploaded
+
+						//first create a new picture
+						$picture = new RingPicture(array());
+						$pic_id = $repo->add_picture($picture);
+
+						$pic_url = $pictures_dir . $pic_id . '.' . $ext;
+						$picture->update(array('order'=>$o, 'url'=>$pic_url, 'ring_id'=>$id));
+
+						$tmp_path = $new_pictures['tmp_name'][$upload_id];
+						move_uploaded_file($tmp_path, path('public').$pic_url);
+					}
+
+					$repo->save_picture($picture);
+				}
 			}
 		}
 
-		$repo->save($entity);
 	}
 }
 
