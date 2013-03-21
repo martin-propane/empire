@@ -70,7 +70,7 @@ echo '</div></div>';
 echo '<div class = "control-group">';
 echo Form::label('source', 'Source', array('class' => 'control-label'));
 echo '<div class = "controls">';
-echo Form::text('source', null, array('class' => 'required'));
+echo Form::text('source', null, array());
 echo '</div></div>';
 
 
@@ -80,10 +80,13 @@ echo '<div class = "controls">';
 echo Form::text('price', null, array('class' => 'required'));
 echo '</div></div>';
 
+
+echo Form::hidden('quantity', 1);
+
 echo '<div class = "control-group">';
-echo Form::label('quantity', 'Quantity', array('class' => 'control-label'));
+echo Form::label('ring_size', 'Ring Size (mm)', array('class' => 'control-label'));
 echo '<div class = "controls">';
-echo Form::text('quantity', null, array('class' => 'required'));
+echo Form::text('ring_size', null, array('class' => 'required'));
 echo '</div></div>';
 
 echo '<div class = "control-group">';

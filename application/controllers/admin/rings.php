@@ -25,7 +25,7 @@ class Admin_Rings_Controller extends Base_Controller
 		$name = Input::get('name');
 		$type_id = Input::get('type_id', 'all');
 		$sort = Input::get('sort', 'id');
-		$order = Input::get('order', 'asc');
+		$order = Input::get('order', 'desc');
 		$page = Input::get('page', 1);
 		$pictures = Input::get('pictures');
 
@@ -64,8 +64,8 @@ class Admin_Rings_Controller extends Base_Controller
 			case 'price':
 				$query->sort_price($order);
 				break;
-			case 'quantity':
-				$query->sort_quantity($order);
+			case 'ring_size':
+				$query->sort_ring_size($order);
 				break;
 		}
 

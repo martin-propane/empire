@@ -66,6 +66,13 @@ class Ring_Query
 		return $this;
 	}
 
+	public function sort_ring_size($order = 'asc')
+	{
+		$this->query = $this->query->order_by('ring_size', $order);
+
+		return $this;
+	}
+
 	public function sort_quantity($order = 'asc')
 	{
 		$this->query = $this->query->order_by('quantity', $order);

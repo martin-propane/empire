@@ -20,26 +20,28 @@ class Ring_Helper
 			mkdir(path('public').$ring_dir); //permissions should be investigated
 		if (!is_dir(path('public').$pictures_dir))
 			mkdir(path('public').$pictures_dir);
-
-		foreach ($mapping as $o=>$map)
+		if ($mapping !== null)
 		{
-			$map_items = explode(' ', $map);
-			$upload_id = $map_items[1];
-			$ext = File::extension($new_pictures['name'][$upload_id]); //continue working on this
+			foreach ($mapping as $o=>$map)
+			{
+				$map_items = explode(' ', $map);
+				$upload_id = $map_items[1];
+				$ext = File::extension($new_pictures['name'][$upload_id]); //continue working on this
 
-			//since this method is for creating first time, all pictures should be uploaded
+				//since this method is for creating first time, all pictures should be uploaded
 
-			//first create a new picture
-			$picture = new RingPicture(array());
-			$pic_id = $repo->add_picture($picture);
+				//first create a new picture
+				$picture = new RingPicture(array());
+				$pic_id = $repo->add_picture($picture);
 
-			$pic_url = $pictures_dir . $pic_id . '.' . $ext;
-			$picture->update(array('order'=>$o, 'url'=>$pic_url, 'ring_id'=>$id));
+				$pic_url = $pictures_dir . $pic_id . '.' . $ext;
+				$picture->update(array('order'=>$o, 'url'=>$pic_url, 'ring_id'=>$id));
 
-			$tmp_path = $new_pictures['tmp_name'][$upload_id];
-			move_uploaded_file($tmp_path, path('public').$pic_url);
+				$tmp_path = $new_pictures['tmp_name'][$upload_id];
+				move_uploaded_file($tmp_path, path('public').$pic_url);
 
-			$repo->save_picture($picture);
+				$repo->save_picture($picture);
+			}
 		}
 
 		return $entity;

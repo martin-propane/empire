@@ -5,7 +5,7 @@ $attr_list = array(
 	'display_picture'=>'Picture',
 	'type_id'=>'Type',
 	'price'=>'Value',
-	'quantity'=>'Quantity',
+	'ring_size'=>'Ring Size (mm)',
 );
 
 $type_list = array();
@@ -63,7 +63,7 @@ foreach ($types as $id=>$type)
 			</td>
 			<td><?php echo $type_list[$e->type_id] ?></td>
 			<td><?php echo '$'.$e->price ?></td>
-			<td><?php echo $e->quantity ?></td>
+			<td><?php echo $e->ring_size ?></td>
 			<td><?php echo HTML::link_to_action('admin.rings@edit', 'Edit', array($e->id), array('class'=>'btn')) ?></td>
 			<td><a href="javascript:void(0)" onClick="deleteItem({{ $e->id }}, '{{ $e->name }}')" class = "btn">Delete</a></td>
 		</tr>
