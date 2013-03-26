@@ -52,13 +52,13 @@ echo '</div></div>';
 echo '<div class = "control-group">';
 echo Form::label('date', 'Date', array('class' => 'control-label'));
 echo '<div class = "controls">';
-echo Form::text('date', null, array('class' => 'required'));
+echo Form::text('date', date('n-j-Y'), array('class' => 'required'));
 echo '</div></div>';
 
 echo '<div class = "control-group">';
 echo Form::label('origin', 'Origin', array('class' => 'control-label'));
 echo '<div class = "controls">';
-echo Form::text('origin', 'Bulgaria', array('class' => 'required'));
+echo Form::text('origin', 'Eastern Europe', array('class' => 'required'));
 echo '</div></div>';
 
 echo '<div class = "control-group">';
@@ -70,7 +70,7 @@ echo '</div></div>';
 echo '<div class = "control-group">';
 echo Form::label('source', 'Source', array('class' => 'control-label'));
 echo '<div class = "controls">';
-echo Form::text('source', null, array());
+echo Form::text('source', 'VW', array());
 echo '</div></div>';
 
 

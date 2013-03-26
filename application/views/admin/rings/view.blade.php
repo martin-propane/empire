@@ -16,7 +16,7 @@ foreach ($types as $id=>$type)
 <legend>Rings</legend>
 	{{ Form::open(URI::current(), 'GET', array('class'=>'form-inline', 'id'=>'view_form')) }}
 		{{ Form::select('type_id', $type_list, $params['type_id']) }}
-		{{ Form::text('Catalog Number', $params['name'], array('class'=>'input-medium', 'placeholder'=>'Catalog Number')) }}
+		{{ Form::text('name', $params['name'], array('class'=>'input-medium', 'placeholder'=>'Catalog Number')) }}
 		{{ Form::hidden('page', $params['page'], array('id'=>'page')) }}
 		{{ Form::hidden('sort', $params['sort'], array('id'=>'sort')) }}
 		{{ Form::hidden('order', $params['order'], array('id'=>'order')) }}
@@ -93,10 +93,11 @@ function submitSort(sort)
 		$('#order').val($('#order').val() === 'asc' ? 'desc' : 'asc');
 	else
 	{
-		$('#page').val(1);
 		$('#sort').val(sort);
 		$('#order').val('asc');
 	}
+
+	$('#page').val(1);
 
 	$('#view_form').submit();
 }

@@ -29,7 +29,7 @@ class Admin_Rings_Controller extends Base_Controller
 		$page = Input::get('page', 1);
 		$pictures = Input::get('pictures');
 
-		$per_page = 10;
+		$per_page = 20;
 
 		$query = new Ring_Query();
 
@@ -69,10 +69,10 @@ class Admin_Rings_Controller extends Base_Controller
 				break;
 		}
 
-		$entities = $query->get();
+		$count = $query->count();
+		$entities = $query->page($per_page, $page-1);
 		$types = IoC::resolve('type_repository')->get_all();
 
-		$count = $query->count();
 		$page_count = $count / $per_page;
 		if ($count % $per_page)
 			$page_count++;
